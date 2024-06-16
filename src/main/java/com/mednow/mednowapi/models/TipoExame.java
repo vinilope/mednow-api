@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Getter
 @Setter
@@ -16,4 +17,7 @@ public class TipoExame implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer idTipoExame;
+
+    @OneToMany(mappedBy = "exame")
+    private List<Exame> exames;
 }

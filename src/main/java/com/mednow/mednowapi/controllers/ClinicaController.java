@@ -22,12 +22,15 @@ public class ClinicaController {
     @Autowired
     private ClinicaRepository clinicaRepository;
 
+    @Autowired
+    private ClinicaService clinicaService;
+
     @PostMapping("/cadastrar")
     public ResponseEntity<Clinica> saveClinica(@RequestBody @Valid ClinicaDto clinicaDto) {
         var clinica = new Clinica();
         BeanUtils.copyProperties(clinicaDto, clinica);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(clinicaRepository.save(clinica));
+        return ResponseEntity.status(HttpStatus.CREATED).body(clinicaService.inserir(clinica));
     }
 
     @GetMapping("/")

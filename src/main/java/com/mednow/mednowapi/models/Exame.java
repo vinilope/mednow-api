@@ -17,4 +17,16 @@ public class Exame implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID idExame;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "fk_consulta")
+    private Consulta consulta;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "fk_laboratorio")
+    private Laboratorio laboratorio;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "fk_tipo_exame")
+    private TipoExame tipoExame;
 }

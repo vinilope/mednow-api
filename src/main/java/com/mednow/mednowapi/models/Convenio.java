@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -17,4 +18,11 @@ public class Convenio implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID idConvenio;
+    private String nome;
+    private String descricao;
+    private String telefone;
+    private String email;
+
+    @OneToMany(mappedBy = "paciente")
+    private List<Paciente> pacientes;
 }

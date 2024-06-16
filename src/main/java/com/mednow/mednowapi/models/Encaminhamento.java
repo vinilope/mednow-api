@@ -17,4 +17,12 @@ public class Encaminhamento implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID idEncaminhamento;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "fk_consulta")
+    private Consulta consulta;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "fk_encaminhado_a")
+    private Medico medico;
 }

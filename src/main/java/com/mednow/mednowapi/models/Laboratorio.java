@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -17,4 +18,11 @@ public class Laboratorio implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID idLaboratorio;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "fk_endereco")
+    private Endereco endereco;
+
+    @OneToMany(mappedBy = "exame")
+    private List<Exame> exames;
 }
