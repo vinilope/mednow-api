@@ -28,6 +28,6 @@ public class Paciente implements Serializable {
     @JoinColumn(name = "fk_endereco")
     private Endereco endereco;
 
-    @OneToMany(mappedBy = "consulta")
+    @OneToMany(mappedBy = "paciente")
     private List<Consulta> consultas;
 }

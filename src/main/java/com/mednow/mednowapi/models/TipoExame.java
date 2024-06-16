@@ -18,6 +18,6 @@ public class TipoExame implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer idTipoExame;
 
-    @OneToMany(mappedBy = "exame")
+    @OneToMany(mappedBy = "tipoExame")
     private List<Exame> exames;
 }

@@ -27,9 +27,9 @@ public class Consulta implements Serializable {
     @JoinColumn(name = "fk_medico")
     private Medico medico;
 
-    @OneToMany(mappedBy = "exame")
+    @OneToMany(mappedBy = "consulta")
     private List<Exame> exames;
 
-    @OneToOne(mappedBy = "encaminhamento")
+    @OneToOne(mappedBy = "consulta")
     private Encaminhamento encaminhamento;
 }

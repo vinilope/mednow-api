@@ -27,12 +27,12 @@ public class Medico implements Serializable {
     @JoinColumn(name = "fk_especialidade")
     private Especialidade especialidade;
 
-    @OneToOne(mappedBy = "usuario")
+    @OneToOne(mappedBy = "medico")
     private Usuario usuario;
 
-    @OneToMany(mappedBy = "consulta")
+    @OneToMany(mappedBy = "medico")
     private List<Consulta> consultas;
 
-    @OneToMany(mappedBy = "encaminhamento")
+    @OneToMany(mappedBy = "medico")
     private List<Encaminhamento> encaminhamentos;
 }

@@ -23,6 +23,6 @@ public class Convenio implements Serializable {
     private String telefone;
     private String email;
 
-    @OneToMany(mappedBy = "paciente")
+    @OneToMany(mappedBy = "convenio")
     private List<Paciente> pacientes;
 }

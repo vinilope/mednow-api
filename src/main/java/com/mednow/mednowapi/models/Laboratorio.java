@@ -23,6 +23,6 @@ public class Laboratorio implements Serializable {
     @JoinColumn(name = "fk_endereco")
     private Endereco endereco;
 
-    @OneToMany(mappedBy = "exame")
+    @OneToMany(mappedBy = "laboratorio")
     private List<Exame> exames;
 }
