@@ -10,12 +10,12 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name="consultorio")
-public class ConsultorioModel implements Serializable {
+@Table(name="clinica")
+public class ClinicaModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID idConsultorio;
+    private UUID idClinica;
     private String nome;
 }
