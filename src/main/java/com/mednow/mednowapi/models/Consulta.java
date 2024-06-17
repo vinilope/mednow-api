@@ -1,10 +1,12 @@
 package com.mednow.mednowapi.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,6 +21,11 @@ public class Consulta implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID idConsulta;
 
+    private LocalDateTime dataHora;
+    private String descricao;
+    private Boolean pedido_exame;
+    private Boolean encaminhado;
+
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_paciente")
     private Paciente paciente;
@@ -27,9 +34,11 @@ public class Consulta implements Serializable {
     @JoinColumn(name = "fk_medico")
     private Medico medico;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "consulta")
     private List<Exame> exames;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "consulta")
     private Encaminhamento encaminhamento;
 }

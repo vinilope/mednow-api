@@ -1,5 +1,6 @@
 package com.mednow.mednowapi.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,6 +24,7 @@ public class Convenio implements Serializable {
     private String telefone;
     private String email;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "convenio")
     private List<Paciente> pacientes;
 }

@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Getter
@@ -17,6 +18,9 @@ public class Exame implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID idExame;
+
+    private LocalDate data;
+    private String observacao;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_consulta")

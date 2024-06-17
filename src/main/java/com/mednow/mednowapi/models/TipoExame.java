@@ -1,5 +1,6 @@
 package com.mednow.mednowapi.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,6 +19,9 @@ public class TipoExame implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer idTipoExame;
 
+    private String descricao;
+
+    @JsonIgnore
     @OneToMany(mappedBy = "tipoExame")
     private List<Exame> exames;
 }

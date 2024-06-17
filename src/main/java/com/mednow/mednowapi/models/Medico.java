@@ -1,5 +1,7 @@
 package com.mednow.mednowapi.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,6 +21,11 @@ public class Medico implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID idMedico;
 
+    private String nome;
+    private String crm;
+    private String telefone;
+    private String email;
+
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_clinica")
     private Clinica clinica;
@@ -27,12 +34,15 @@ public class Medico implements Serializable {
     @JoinColumn(name = "fk_especialidade")
     private Especialidade especialidade;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "medico")
     private Usuario usuario;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "medico")
     private List<Consulta> consultas;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "medico")
     private List<Encaminhamento> encaminhamentos;
 }
