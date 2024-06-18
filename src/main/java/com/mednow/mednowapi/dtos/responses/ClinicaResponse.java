@@ -20,6 +20,6 @@ public class ClinicaResponse {
         this.telefone = clinica.getTelefone();
         this.email = clinica.getEmail();
         this.cnpj = clinica.getCnpj();
-        this.medicos = clinica.getMedicos().stream().map(MedicoResponse::new).collect(Collectors.toList());
+        this.medicos = clinica.getMedicos().stream().map(MedicoResponse::new).toList();
     }
 }

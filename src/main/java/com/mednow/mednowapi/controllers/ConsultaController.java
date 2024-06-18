@@ -22,10 +22,8 @@ public class ConsultaController {
 
     @PostMapping("/cadastrar")
     public ResponseEntity<Object> saveConsulta(@RequestBody @Valid ConsultaRequest consultaRequest) {
-        var consulta = new Consulta();
-        BeanUtils.copyProperties(consultaRequest, consulta);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(consultaService.inserirConsulta(consulta));
+        return ResponseEntity.status(HttpStatus.CREATED).body(consultaService.inserirConsulta(consultaRequest));
     }
 
     @GetMapping("/")
@@ -59,7 +57,7 @@ public class ConsultaController {
         }
 
         BeanUtils.copyProperties(consultaRequest, consulta);
-        return ResponseEntity.status(HttpStatus.OK).body(consultaService.inserirConsulta(consulta));
+        return ResponseEntity.status(HttpStatus.OK).body(consultaService.inserirConsulta(consultaRequest));
     }
 
     @DeleteMapping("/deletar/{id}")

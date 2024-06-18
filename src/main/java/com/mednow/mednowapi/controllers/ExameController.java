@@ -22,10 +22,8 @@ public class ExameController {
 
     @PostMapping("/cadastrar")
     public ResponseEntity<Object> saveExame(@RequestBody @Valid ExameRequest exameRequest) {
-        var exame = new Exame();
-        BeanUtils.copyProperties(exameRequest, exame);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(exameService.inserirExame(exame));
+        return ResponseEntity.status(HttpStatus.CREATED).body(exameService.inserirExame(exameRequest));
     }
 
     @GetMapping("/")
@@ -58,8 +56,7 @@ public class ExameController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Exame não encontrado.");
         }
 
-        BeanUtils.copyProperties(exameRequest, exame);
-        return ResponseEntity.status(HttpStatus.OK).body(exameService.inserirExame(exame));
+        return ResponseEntity.status(HttpStatus.OK).body(exameService.inserirExame(exameRequest));
     }
 
     @DeleteMapping("/deletar/{id}")

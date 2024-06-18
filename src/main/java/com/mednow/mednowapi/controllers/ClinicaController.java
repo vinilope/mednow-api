@@ -6,7 +6,6 @@ import com.mednow.mednowapi.models.Clinica;
 import com.mednow.mednowapi.services.ClinicaService;
 import jakarta.validation.Valid;
 import lombok.Builder;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,10 +23,8 @@ public class ClinicaController {
 
     @PostMapping("/cadastrar")
     public ResponseEntity<Object> saveClinica(@RequestBody @Valid ClinicaRequest clinicaRequest) {
-        var clinica = new Clinica();
-        BeanUtils.copyProperties(clinicaRequest, clinica);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(clinicaService.inserirClinica(clinica));
+        return ResponseEntity.status(HttpStatus.CREATED).body(clinicaService.inserirClinica(clinicaRequest));
     }
 
     @GetMapping("/")
@@ -63,7 +60,7 @@ public class ClinicaController {
         }
 
         BeanUtils.copyProperties(clinicaRequest, clinica);
-        return ResponseEntity.status(HttpStatus.OK).body(clinicaService.inserirClinica(clinica));
+        return ResponseEntity.status(HttpStatus.OK).body(clinicaService.inserirClinica(clinicaRequest));
     }
 
     @DeleteMapping("/deletar/{id}")

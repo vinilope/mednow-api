@@ -22,10 +22,8 @@ public class UsuarioController {
 
     @PostMapping("/cadastrar")
     public ResponseEntity<Object> saveUsuario(@RequestBody @Valid UsuarioRequest usuarioRequest) {
-        var usuario = new Usuario();
-        BeanUtils.copyProperties(usuarioRequest, usuario);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.inserirUsuario(usuario));
+        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.inserirUsuario(usuarioRequest));
     }
 
     @GetMapping("/")
@@ -58,8 +56,7 @@ public class UsuarioController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado.");
         }
 
-        BeanUtils.copyProperties(usuarioRequest, usuario);
-        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.inserirUsuario(usuario));
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.inserirUsuario(usuarioRequest));
     }
 
     @DeleteMapping("/deletar/{id}")

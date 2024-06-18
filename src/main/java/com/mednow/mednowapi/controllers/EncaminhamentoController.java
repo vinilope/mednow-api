@@ -22,10 +22,8 @@ public class EncaminhamentoController {
 
     @PostMapping("/cadastrar")
     public ResponseEntity<Object> saveEncaminhamento(@RequestBody @Valid EncaminhamentoRequest encaminhamentoRequest) {
-        var encaminhamento = new Encaminhamento();
-        BeanUtils.copyProperties(encaminhamentoRequest, encaminhamento);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(encaminhamentoService.inserirEncaminhamento(encaminhamento));
+        return ResponseEntity.status(HttpStatus.CREATED).body(encaminhamentoService.inserirEncaminhamento(encaminhamentoRequest));
     }
 
     @GetMapping("/")
@@ -59,7 +57,7 @@ public class EncaminhamentoController {
         }
 
         BeanUtils.copyProperties(encaminhamentoRequest, encaminhamento);
-        return ResponseEntity.status(HttpStatus.OK).body(encaminhamentoService.inserirEncaminhamento(encaminhamento));
+        return ResponseEntity.status(HttpStatus.OK).body(encaminhamentoService.inserirEncaminhamento(encaminhamentoRequest));
     }
 
     @DeleteMapping("/deletar/{id}")

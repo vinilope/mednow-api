@@ -12,7 +12,7 @@ public record PacienteRequest(
         String telefone,
         String email,
         UUID fkConvenio,
-        // TODO: poder tanto cadastrar um endereço junto, quando cadastrar um paciente com endereço já existente
-         UUID fkEndereco
-        // Endereco endereco
+        // Caso um vir nulo, cadastrar o outro
+        UUID fkEndereco,
+        Endereco endereco
 ) {}

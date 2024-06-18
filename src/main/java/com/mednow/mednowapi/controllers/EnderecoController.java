@@ -22,10 +22,8 @@ public class EnderecoController {
 
     @PostMapping("/cadastrar")
     public ResponseEntity<Object> saveEndereco(@RequestBody @Valid EnderecoRequest enderecoRequest) {
-        var endereco = new Endereco();
-        BeanUtils.copyProperties(enderecoRequest, endereco);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(enderecoService.inserirEndereco(endereco));
+        return ResponseEntity.status(HttpStatus.CREATED).body(enderecoService.inserirEndereco(enderecoRequest));
     }
 
     @GetMapping("/")
@@ -58,8 +56,7 @@ public class EnderecoController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Endereço não encontrado.");
         }
 
-        BeanUtils.copyProperties(enderecoRequest, endereco);
-        return ResponseEntity.status(HttpStatus.OK).body(enderecoService.inserirEndereco(endereco));
+        return ResponseEntity.status(HttpStatus.OK).body(enderecoService.inserirEndereco(enderecoRequest));
     }
 
     @DeleteMapping("/deletar/{id}")

@@ -1,10 +1,12 @@
 package com.mednow.mednowapi.services;
 
+import com.mednow.mednowapi.dtos.requests.PacienteRequest;
 import com.mednow.mednowapi.models.Paciente;
 import com.mednow.mednowapi.repositories.PacienteRepository;
 import jakarta.transaction.Transactional;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +19,11 @@ public class PacienteService {
 
     private PacienteRepository pacienteRepository;
 
-    public Paciente inserirPaciente(Paciente paciente) {
+    public Paciente inserirPaciente(PacienteRequest pacienteRequest) {
+
+        Paciente paciente = new Paciente();
+        BeanUtils.copyProperties(pacienteRequest, paciente);
+
         return pacienteRepository.save(paciente);
     }
 

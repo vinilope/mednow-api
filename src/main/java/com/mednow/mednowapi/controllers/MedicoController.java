@@ -2,6 +2,7 @@ package com.mednow.mednowapi.controllers;
 
 import com.mednow.mednowapi.dtos.requests.MedicoRequest;
 import com.mednow.mednowapi.models.Medico;
+import com.mednow.mednowapi.services.ClinicaService;
 import com.mednow.mednowapi.services.MedicoService;
 import jakarta.validation.Valid;
 import lombok.Builder;
@@ -19,13 +20,12 @@ import java.util.UUID;
 public class MedicoController {
 
     private MedicoService medicoService;
+    private ClinicaService clinicaService;
 
     @PostMapping("/cadastrar")
     public ResponseEntity<Object> saveMedico(@RequestBody @Valid MedicoRequest medicoRequest) {
-        var medico = new Medico();
-        BeanUtils.copyProperties(medicoRequest, medico);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(medicoService.inserirMedico(medico));
+        return ResponseEntity.status(HttpStatus.CREATED).body(medicoService.inserirMedico(medicoRequest));
     }
 
     @GetMapping("/")
@@ -58,8 +58,7 @@ public class MedicoController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Médico não encontrado.");
         }
 
-        BeanUtils.copyProperties(medicoRequest, medico);
-        return ResponseEntity.status(HttpStatus.OK).body(medicoService.inserirMedico(medico));
+        return ResponseEntity.status(HttpStatus.OK).body(medicoService.inserirMedico(medicoRequest));
     }
 
     @DeleteMapping("/deletar/{id}")

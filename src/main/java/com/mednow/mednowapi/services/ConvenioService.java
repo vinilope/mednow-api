@@ -1,10 +1,12 @@
 package com.mednow.mednowapi.services;
 
+import com.mednow.mednowapi.dtos.requests.ConvenioRequest;
 import com.mednow.mednowapi.models.Convenio;
 import com.mednow.mednowapi.repositories.ConvenioRepository;
 import jakarta.transaction.Transactional;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +19,11 @@ public class ConvenioService {
 
     private ConvenioRepository convenioRepository;
 
-    public Convenio inserirConvenio(Convenio convenio) {
+    public Convenio inserirConvenio(ConvenioRequest convenioRequest) {
+
+        Convenio convenio = new Convenio();
+        BeanUtils.copyProperties(convenioRequest, convenio);
+
         return convenioRepository.save(convenio);
     }
 

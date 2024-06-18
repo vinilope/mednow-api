@@ -22,10 +22,8 @@ public class PacienteController {
 
     @PostMapping("/cadastrar")
     public ResponseEntity<Object> savePaciente(@RequestBody @Valid PacienteRequest pacienteRequest) {
-        var paciente = new Paciente();
-        BeanUtils.copyProperties(pacienteRequest, paciente);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(pacienteService.inserirPaciente(paciente));
+        return ResponseEntity.status(HttpStatus.CREATED).body(pacienteService.inserirPaciente(pacienteRequest));
     }
 
     @GetMapping("/")
@@ -58,8 +56,7 @@ public class PacienteController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Paciente não encontrado.");
         }
 
-        BeanUtils.copyProperties(pacienteRequest, paciente);
-        return ResponseEntity.status(HttpStatus.OK).body(pacienteService.inserirPaciente(paciente));
+        return ResponseEntity.status(HttpStatus.OK).body(pacienteService.inserirPaciente(pacienteRequest));
     }
 
     @DeleteMapping("/deletar/{id}")

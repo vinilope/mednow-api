@@ -1,10 +1,12 @@
 package com.mednow.mednowapi.services;
 
+import com.mednow.mednowapi.dtos.requests.UsuarioRequest;
 import com.mednow.mednowapi.models.Usuario;
 import com.mednow.mednowapi.repositories.UsuarioRepository;
 import jakarta.transaction.Transactional;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +19,11 @@ public class UsuarioService {
 
     private UsuarioRepository usuarioRepository;
 
-    public Usuario inserirUsuario(Usuario usuario) {
+    public Usuario inserirUsuario(UsuarioRequest usuarioRequest) {
+
+        Usuario usuario = new Usuario();
+        BeanUtils.copyProperties(usuarioRequest, usuario);
+
         return usuarioRepository.save(usuario);
     }
 

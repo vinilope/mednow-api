@@ -1,10 +1,12 @@
 package com.mednow.mednowapi.services;
 
+import com.mednow.mednowapi.dtos.requests.ExameRequest;
 import com.mednow.mednowapi.models.Exame;
 import com.mednow.mednowapi.repositories.ExameRepository;
 import jakarta.transaction.Transactional;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +19,11 @@ public class ExameService {
 
     private ExameRepository exameRepository;
 
-    public Exame inserirExame(Exame exame) {
+    public Exame inserirExame(ExameRequest exameRequest) {
+
+        Exame exame = new Exame();
+        BeanUtils.copyProperties(exameRequest, exame);
+
         return exameRepository.save(exame);
     }
 

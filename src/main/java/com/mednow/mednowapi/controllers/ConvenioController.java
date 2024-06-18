@@ -22,10 +22,8 @@ public class ConvenioController {
 
     @PostMapping("/cadastrar")
     public ResponseEntity<Object> saveConvenio(@RequestBody @Valid ConvenioRequest convenioRequest) {
-        var convenio = new Convenio();
-        BeanUtils.copyProperties(convenioRequest, convenio);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(convenioService.inserirConvenio(convenio));
+        return ResponseEntity.status(HttpStatus.CREATED).body(convenioService.inserirConvenio(convenioRequest));
     }
 
     @GetMapping("/")
@@ -58,8 +56,7 @@ public class ConvenioController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Convenio não encontrada.");
         }
 
-        BeanUtils.copyProperties(convenioRequest, convenio);
-        return ResponseEntity.status(HttpStatus.OK).body(convenioService.inserirConvenio(convenio));
+        return ResponseEntity.status(HttpStatus.OK).body(convenioService.inserirConvenio(convenioRequest));
     }
 
     @DeleteMapping("/deletar/{id}")

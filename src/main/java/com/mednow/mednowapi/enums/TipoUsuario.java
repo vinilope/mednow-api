@@ -5,10 +5,10 @@ public enum TipoUsuario {
     MEDICO(1, "Médico");
 
     private Integer userCod;
-    private String user;
+    private String usuario;
 
-    TipoUsuario(Integer userCod, String user) {
+    TipoUsuario(Integer userCod, String usuario) {
         this.userCod = userCod;
-        this.user = user;
+        this.usuario = usuario;
     }
 }
