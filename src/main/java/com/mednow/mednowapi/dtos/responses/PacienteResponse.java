@@ -1,7 +1,5 @@
 package com.mednow.mednowapi.dtos.responses;
 
-import com.mednow.mednowapi.models.Convenio;
-import com.mednow.mednowapi.models.Endereco;
 import com.mednow.mednowapi.models.Paciente;
 import lombok.Getter;
 

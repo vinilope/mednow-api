@@ -4,7 +4,6 @@ import com.mednow.mednowapi.models.*;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
 public class ConsultaResponse {

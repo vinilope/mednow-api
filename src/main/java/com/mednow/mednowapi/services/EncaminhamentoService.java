@@ -5,7 +5,6 @@ import com.mednow.mednowapi.models.Encaminhamento;
 import com.mednow.mednowapi.repositories.EncaminhamentoRepository;
 import jakarta.transaction.Transactional;
 import lombok.Builder;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 

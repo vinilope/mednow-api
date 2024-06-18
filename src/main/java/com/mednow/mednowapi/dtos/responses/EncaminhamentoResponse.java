@@ -1,9 +1,7 @@
 package com.mednow.mednowapi.dtos.responses;
 
 import com.mednow.mednowapi.enums.StatusEncaminhamento;
-import com.mednow.mednowapi.models.Consulta;
 import com.mednow.mednowapi.models.Encaminhamento;
-import com.mednow.mednowapi.models.Medico;
 import lombok.Getter;
 
 import java.time.LocalDate;

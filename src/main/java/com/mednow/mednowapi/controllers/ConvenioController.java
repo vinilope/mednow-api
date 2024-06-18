@@ -5,7 +5,6 @@ import com.mednow.mednowapi.models.Convenio;
 import com.mednow.mednowapi.services.ConvenioService;
 import jakarta.validation.Valid;
 import lombok.Builder;
-import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

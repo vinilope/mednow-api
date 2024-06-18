@@ -5,7 +5,6 @@ import com.mednow.mednowapi.models.Usuario;
 import com.mednow.mednowapi.repositories.UsuarioRepository;
 import jakarta.transaction.Transactional;
 import lombok.Builder;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 

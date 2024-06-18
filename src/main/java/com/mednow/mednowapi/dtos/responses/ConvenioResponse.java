@@ -1,7 +1,6 @@
 package com.mednow.mednowapi.dtos.responses;
 
 import com.mednow.mednowapi.models.Convenio;
-import com.mednow.mednowapi.models.Paciente;
 import lombok.Getter;
 
 import java.util.List;

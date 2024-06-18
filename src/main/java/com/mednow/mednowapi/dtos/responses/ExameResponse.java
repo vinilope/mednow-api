@@ -1,8 +1,6 @@
 package com.mednow.mednowapi.dtos.responses;
 
-import com.mednow.mednowapi.models.Consulta;
 import com.mednow.mednowapi.models.Exame;
-import com.mednow.mednowapi.models.Laboratorio;
 import lombok.Getter;
 
 import java.time.LocalDate;

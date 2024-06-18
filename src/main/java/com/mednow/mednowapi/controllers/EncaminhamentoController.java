@@ -5,7 +5,6 @@ import com.mednow.mednowapi.models.Encaminhamento;
 import com.mednow.mednowapi.services.EncaminhamentoService;
 import jakarta.validation.Valid;
 import lombok.Builder;
-import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -56,7 +55,6 @@ public class EncaminhamentoController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Encaminhamento não encontrado.");
         }
 
-        BeanUtils.copyProperties(encaminhamentoRequest, encaminhamento);
         return ResponseEntity.status(HttpStatus.OK).body(encaminhamentoService.inserirEncaminhamento(encaminhamentoRequest));
     }
 

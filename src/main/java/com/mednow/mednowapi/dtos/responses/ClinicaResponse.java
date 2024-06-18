@@ -1,11 +1,9 @@
 package com.mednow.mednowapi.dtos.responses;
 
 import com.mednow.mednowapi.models.Clinica;
-import com.mednow.mednowapi.models.Medico;
 import lombok.Getter;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Getter
 public class ClinicaResponse {

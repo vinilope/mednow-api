@@ -1,10 +1,7 @@
 package com.mednow.mednowapi.dtos.responses;
 
-import com.mednow.mednowapi.enums.EspecialidadeMedico;
-import com.mednow.mednowapi.models.*;
+import com.mednow.mednowapi.models.Medico;
 import lombok.Getter;
-
-import java.util.List;
 
 @Getter
 public class MedicoResponse {
