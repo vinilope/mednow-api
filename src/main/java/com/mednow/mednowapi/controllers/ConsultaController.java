@@ -1,6 +1,6 @@
 package com.mednow.mednowapi.controllers;
 
-import com.mednow.mednowapi.dtos.ConsultaDto;
+import com.mednow.mednowapi.dtos.requests.ConsultaRequest;
 import com.mednow.mednowapi.models.Consulta;
 import com.mednow.mednowapi.services.ConsultaService;
 import jakarta.validation.Valid;
@@ -21,9 +21,9 @@ public class ConsultaController {
     private ConsultaService consultaService;
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<Object> saveConsulta(@RequestBody @Valid ConsultaDto consultaDto) {
+    public ResponseEntity<Object> saveConsulta(@RequestBody @Valid ConsultaRequest consultaRequest) {
         var consulta = new Consulta();
-        BeanUtils.copyProperties(consultaDto, consulta);
+        BeanUtils.copyProperties(consultaRequest, consulta);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(consultaService.inserirConsulta(consulta));
     }
@@ -51,14 +51,14 @@ public class ConsultaController {
     }
 
     @PutMapping("/atualizar/{id}")
-    public ResponseEntity<Object> updateConsultaById(@PathVariable UUID id, @RequestBody @Valid ConsultaDto consultaDto) {
+    public ResponseEntity<Object> updateConsultaById(@PathVariable UUID id, @RequestBody @Valid ConsultaRequest consultaRequest) {
         Consulta consulta = consultaService.getConsultaById(id);
 
         if (consulta == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Consulta não encontrada.");
         }
 
-        BeanUtils.copyProperties(consultaDto, consulta);
+        BeanUtils.copyProperties(consultaRequest, consulta);
         return ResponseEntity.status(HttpStatus.OK).body(consultaService.inserirConsulta(consulta));
     }
 

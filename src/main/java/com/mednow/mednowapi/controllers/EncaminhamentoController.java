@@ -1,6 +1,6 @@
 package com.mednow.mednowapi.controllers;
 
-import com.mednow.mednowapi.dtos.EncaminhamentoDto;
+import com.mednow.mednowapi.dtos.requests.EncaminhamentoRequest;
 import com.mednow.mednowapi.models.Encaminhamento;
 import com.mednow.mednowapi.services.EncaminhamentoService;
 import jakarta.validation.Valid;
@@ -21,9 +21,9 @@ public class EncaminhamentoController {
     private EncaminhamentoService encaminhamentoService;
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<Object> saveEncaminhamento(@RequestBody @Valid EncaminhamentoDto encaminhamentoDto) {
+    public ResponseEntity<Object> saveEncaminhamento(@RequestBody @Valid EncaminhamentoRequest encaminhamentoRequest) {
         var encaminhamento = new Encaminhamento();
-        BeanUtils.copyProperties(encaminhamentoDto, encaminhamento);
+        BeanUtils.copyProperties(encaminhamentoRequest, encaminhamento);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(encaminhamentoService.inserirEncaminhamento(encaminhamento));
     }
@@ -51,14 +51,14 @@ public class EncaminhamentoController {
     }
 
     @PutMapping("/atualizar/{id}")
-    public ResponseEntity<Object> updateEncaminhamentoById(@PathVariable UUID id, @RequestBody @Valid EncaminhamentoDto encaminhamentoDto) {
+    public ResponseEntity<Object> updateEncaminhamentoById(@PathVariable UUID id, @RequestBody @Valid EncaminhamentoRequest encaminhamentoRequest) {
         Encaminhamento encaminhamento = encaminhamentoService.getEncaminhamentoById(id);
 
         if (encaminhamento == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Encaminhamento não encontrado.");
         }
 
-        BeanUtils.copyProperties(encaminhamentoDto, encaminhamento);
+        BeanUtils.copyProperties(encaminhamentoRequest, encaminhamento);
         return ResponseEntity.status(HttpStatus.OK).body(encaminhamentoService.inserirEncaminhamento(encaminhamento));
     }
 

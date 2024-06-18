@@ -1,6 +1,6 @@
 package com.mednow.mednowapi.controllers;
 
-import com.mednow.mednowapi.dtos.EnderecoDto;
+import com.mednow.mednowapi.dtos.requests.EnderecoRequest;
 import com.mednow.mednowapi.models.Endereco;
 import com.mednow.mednowapi.services.EnderecoService;
 import jakarta.validation.Valid;
@@ -21,9 +21,9 @@ public class EnderecoController {
     private EnderecoService enderecoService;
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<Object> saveEndereco(@RequestBody @Valid EnderecoDto enderecoDto) {
+    public ResponseEntity<Object> saveEndereco(@RequestBody @Valid EnderecoRequest enderecoRequest) {
         var endereco = new Endereco();
-        BeanUtils.copyProperties(enderecoDto, endereco);
+        BeanUtils.copyProperties(enderecoRequest, endereco);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(enderecoService.inserirEndereco(endereco));
     }
@@ -51,14 +51,14 @@ public class EnderecoController {
     }
 
     @PutMapping("/atualizar/{id}")
-    public ResponseEntity<Object> updateEnderecoById(@PathVariable UUID id, @RequestBody @Valid EnderecoDto enderecoDto) {
+    public ResponseEntity<Object> updateEnderecoById(@PathVariable UUID id, @RequestBody @Valid EnderecoRequest enderecoRequest) {
         Endereco endereco = enderecoService.getEnderecoById(id);
 
         if (endereco == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Endereço não encontrado.");
         }
 
-        BeanUtils.copyProperties(enderecoDto, endereco);
+        BeanUtils.copyProperties(enderecoRequest, endereco);
         return ResponseEntity.status(HttpStatus.OK).body(enderecoService.inserirEndereco(endereco));
     }
 

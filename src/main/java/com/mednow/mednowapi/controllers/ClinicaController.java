@@ -1,6 +1,7 @@
 package com.mednow.mednowapi.controllers;
 
-import com.mednow.mednowapi.dtos.ClinicaDto;
+import com.mednow.mednowapi.dtos.requests.ClinicaRequest;
+import com.mednow.mednowapi.dtos.responses.ClinicaResponse;
 import com.mednow.mednowapi.models.Clinica;
 import com.mednow.mednowapi.services.ClinicaService;
 import jakarta.validation.Valid;
@@ -22,9 +23,9 @@ public class ClinicaController {
     private ClinicaService clinicaService;
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<Object> saveClinica(@RequestBody @Valid ClinicaDto clinicaDto) {
+    public ResponseEntity<Object> saveClinica(@RequestBody @Valid ClinicaRequest clinicaRequest) {
         var clinica = new Clinica();
-        BeanUtils.copyProperties(clinicaDto, clinica);
+        BeanUtils.copyProperties(clinicaRequest, clinica);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(clinicaService.inserirClinica(clinica));
     }
@@ -48,18 +49,20 @@ public class ClinicaController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Clínica não encontrada.");
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(clinica);
+        ClinicaResponse clinicaResponse = new ClinicaResponse(clinica);
+
+        return ResponseEntity.status(HttpStatus.OK).body(clinicaResponse);
     }
 
     @PutMapping("/atualizar/{id}")
-    public ResponseEntity<Object> updateClinica(@PathVariable UUID id, @RequestBody @Valid ClinicaDto clinicaDto) {
+    public ResponseEntity<Object> updateClinica(@PathVariable UUID id, @RequestBody @Valid ClinicaRequest clinicaRequest) {
         Clinica clinica = clinicaService.getClinicaById(id);
 
         if (clinica == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Clínica não encontrada.");
         }
 
-        BeanUtils.copyProperties(clinicaDto, clinica);
+        BeanUtils.copyProperties(clinicaRequest, clinica);
         return ResponseEntity.status(HttpStatus.OK).body(clinicaService.inserirClinica(clinica));
     }
 

@@ -1,5 +1,6 @@
 package com.mednow.mednowapi.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mednow.mednowapi.enums.TipoUsuario;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -19,11 +20,11 @@ public class Usuario implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID idUsuario;
 
-    private String nomeUsuario;
+    private String nomeAcesso;
     private String senha;
-    private TipoUsuario tipoUsuario;
+    private Integer tipoUsuario;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "fk_medico")
+    @JsonIgnore
+    @OneToOne(mappedBy = "usuario")
     private Medico medico;
 }

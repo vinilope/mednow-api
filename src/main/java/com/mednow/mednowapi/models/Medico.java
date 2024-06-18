@@ -2,6 +2,7 @@ package com.mednow.mednowapi.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.mednow.mednowapi.enums.EspecialidadeMedico;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,24 +26,19 @@ public class Medico implements Serializable {
     private String crm;
     private String telefone;
     private String email;
+    private Integer especialidade;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_clinica")
     private Clinica clinica;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "fk_especialidade")
-    private Especialidade especialidade;
-
-    @JsonIgnore
-    @OneToOne(mappedBy = "medico")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "fk_usuario")
     private Usuario usuario;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "medico")
     private List<Consulta> consultas;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "medico")
     private List<Encaminhamento> encaminhamentos;
 }

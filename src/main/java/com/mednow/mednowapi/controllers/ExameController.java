@@ -1,6 +1,6 @@
 package com.mednow.mednowapi.controllers;
 
-import com.mednow.mednowapi.dtos.ExameDto;
+import com.mednow.mednowapi.dtos.requests.ExameRequest;
 import com.mednow.mednowapi.models.Exame;
 import com.mednow.mednowapi.services.ExameService;
 import jakarta.validation.Valid;
@@ -21,9 +21,9 @@ public class ExameController {
     private ExameService exameService;
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<Object> saveExame(@RequestBody @Valid ExameDto exameDto) {
+    public ResponseEntity<Object> saveExame(@RequestBody @Valid ExameRequest exameRequest) {
         var exame = new Exame();
-        BeanUtils.copyProperties(exameDto, exame);
+        BeanUtils.copyProperties(exameRequest, exame);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(exameService.inserirExame(exame));
     }
@@ -51,14 +51,14 @@ public class ExameController {
     }
 
     @PutMapping("/atualizar/{id}")
-    public ResponseEntity<Object> updateExameById(@PathVariable UUID id, @RequestBody @Valid ExameDto exameDto) {
+    public ResponseEntity<Object> updateExameById(@PathVariable UUID id, @RequestBody @Valid ExameRequest exameRequest) {
         Exame exame = exameService.getExameById(id);
 
         if (exame == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Exame não encontrado.");
         }
 
-        BeanUtils.copyProperties(exameDto, exame);
+        BeanUtils.copyProperties(exameRequest, exame);
         return ResponseEntity.status(HttpStatus.OK).body(exameService.inserirExame(exame));
     }
 

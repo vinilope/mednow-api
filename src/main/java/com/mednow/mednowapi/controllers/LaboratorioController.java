@@ -1,6 +1,6 @@
 package com.mednow.mednowapi.controllers;
 
-import com.mednow.mednowapi.dtos.LaboratorioDto;
+import com.mednow.mednowapi.dtos.requests.LaboratorioRequest;
 import com.mednow.mednowapi.models.Laboratorio;
 import com.mednow.mednowapi.services.LaboratorioService;
 import jakarta.validation.Valid;
@@ -21,9 +21,9 @@ public class LaboratorioController {
     private LaboratorioService laboratorioService;
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<Object> saveLaboratorio(@RequestBody @Valid LaboratorioDto laboratorioDto) {
+    public ResponseEntity<Object> saveLaboratorio(@RequestBody @Valid LaboratorioRequest laboratorioRequest) {
         var laboratorio = new Laboratorio();
-        BeanUtils.copyProperties(laboratorioDto, laboratorio);
+        BeanUtils.copyProperties(laboratorioRequest, laboratorio);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(laboratorioService.inserirLaboratorio(laboratorio));
     }
@@ -51,14 +51,14 @@ public class LaboratorioController {
     }
 
     @PutMapping("/atualizar/{id}")
-    public ResponseEntity<Object> updateLaboratorioById(@PathVariable UUID id, @RequestBody @Valid LaboratorioDto laboratorioDto) {
+    public ResponseEntity<Object> updateLaboratorioById(@PathVariable UUID id, @RequestBody @Valid LaboratorioRequest laboratorioRequest) {
         Laboratorio laboratorio = laboratorioService.getLaboratorioById(id);
 
         if (laboratorio == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Laboratório não encontrado.");
         }
 
-        BeanUtils.copyProperties(laboratorioDto, laboratorio);
+        BeanUtils.copyProperties(laboratorioRequest, laboratorio);
         return ResponseEntity.status(HttpStatus.OK).body(laboratorioService.inserirLaboratorio(laboratorio));
     }
 

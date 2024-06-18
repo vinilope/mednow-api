@@ -1,6 +1,6 @@
 package com.mednow.mednowapi.controllers;
 
-import com.mednow.mednowapi.dtos.MedicoDto;
+import com.mednow.mednowapi.dtos.requests.MedicoRequest;
 import com.mednow.mednowapi.models.Medico;
 import com.mednow.mednowapi.services.MedicoService;
 import jakarta.validation.Valid;
@@ -21,9 +21,9 @@ public class MedicoController {
     private MedicoService medicoService;
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<Object> saveMedico(@RequestBody @Valid MedicoDto medicoDto) {
+    public ResponseEntity<Object> saveMedico(@RequestBody @Valid MedicoRequest medicoRequest) {
         var medico = new Medico();
-        BeanUtils.copyProperties(medicoDto, medico);
+        BeanUtils.copyProperties(medicoRequest, medico);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(medicoService.inserirMedico(medico));
     }
@@ -51,14 +51,14 @@ public class MedicoController {
     }
 
     @PutMapping("/atualizar/{id}")
-    public ResponseEntity<Object> updateMedicoById(@PathVariable UUID id, @RequestBody @Valid MedicoDto medicoDto) {
+    public ResponseEntity<Object> updateMedicoById(@PathVariable UUID id, @RequestBody @Valid MedicoRequest medicoRequest) {
         Medico medico = medicoService.getMedicoById(id);
 
         if (medico == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Médico não encontrado.");
         }
 
-        BeanUtils.copyProperties(medicoDto, medico);
+        BeanUtils.copyProperties(medicoRequest, medico);
         return ResponseEntity.status(HttpStatus.OK).body(medicoService.inserirMedico(medico));
     }
 

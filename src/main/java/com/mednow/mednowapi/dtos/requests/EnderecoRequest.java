@@ -1,6 +1,6 @@
-package com.mednow.mednowapi.dtos;
+package com.mednow.mednowapi.dtos.requests;
 
-public record EnderecoDto(
+public record EnderecoRequest(
         String logradouro,
         String numero,
         String complemento,

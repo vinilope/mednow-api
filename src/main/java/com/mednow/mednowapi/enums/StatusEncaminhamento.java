@@ -3,14 +3,16 @@ package com.mednow.mednowapi.enums;
 import lombok.Builder;
 
 public enum StatusEncaminhamento {
-    PENDENTE(1, "pending"),
-    FINALIZADO(2, "finished");
+    FINALIZADO(1, "Finalizado"),
+    CANCELADO(2, "Cancelado"),
+    EM_PROGRESSO(3, "Em Progresso"),
+    AGENDADO(4, "Agendado");
 
     private Integer statusCod;
-    private String statusValue;
+    private String status;
 
-    StatusEncaminhamento(Integer statusCod, String statusValue) {
+    StatusEncaminhamento(Integer statusCod, String status) {
         this.statusCod = statusCod;
-        this.statusValue = statusValue;
+        this.status = status;
     }
 }

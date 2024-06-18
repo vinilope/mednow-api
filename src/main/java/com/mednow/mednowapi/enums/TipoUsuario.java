@@ -1,14 +1,14 @@
 package com.mednow.mednowapi.enums;
 
 public enum TipoUsuario {
-    ADMIN(0, "adm"),
-    MEDICO(1, "med");
+    ADMIN(0, "Admin"),
+    MEDICO(1, "Médico");
 
     private Integer userCod;
-    private String userValue;
+    private String user;
 
-    TipoUsuario(Integer userCod, String userValue) {
+    TipoUsuario(Integer userCod, String user) {
         this.userCod = userCod;
-        this.userValue = userValue;
+        this.user = user;
     }
 }

@@ -1,6 +1,6 @@
 package com.mednow.mednowapi.controllers;
 
-import com.mednow.mednowapi.dtos.UsuarioDto;
+import com.mednow.mednowapi.dtos.requests.UsuarioRequest;
 import com.mednow.mednowapi.models.Usuario;
 import com.mednow.mednowapi.services.UsuarioService;
 import jakarta.validation.Valid;
@@ -21,26 +21,26 @@ public class UsuarioController {
     private UsuarioService usuarioService;
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<Object> saveUsuario(@RequestBody @Valid UsuarioDto usuarioDto) {
+    public ResponseEntity<Object> saveUsuario(@RequestBody @Valid UsuarioRequest usuarioRequest) {
         var usuario = new Usuario();
-        BeanUtils.copyProperties(usuarioDto, usuario);
+        BeanUtils.copyProperties(usuarioRequest, usuario);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.inserirUsuario(usuario));
     }
 
     @GetMapping("/")
-    public ResponseEntity<Object> getUsuarios() {
+    public ResponseEntity<List<Usuario>> getUsuarios() {
         List<Usuario> usuarios = usuarioService.getAllUsuarios();
 
         if (usuarios.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Nenhum usuário encontrado.");
+            throw new RuntimeException("Usuário blablabla");
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(usuarios);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> getUsuarioById(@PathVariable UUID id) {
+    public ResponseEntity<?> getUsuarioById(@PathVariable UUID id) {
         Usuario usuario = usuarioService.getUsuarioById(id);
 
         if (usuario == null) {
@@ -51,14 +51,14 @@ public class UsuarioController {
     }
 
     @PutMapping("/atualizar/{id}")
-    public ResponseEntity<Object> updateUsuarioById(@PathVariable UUID id, @RequestBody @Valid UsuarioDto usuarioDto) {
+    public ResponseEntity<Object> updateUsuarioById(@PathVariable UUID id, @RequestBody @Valid UsuarioRequest usuarioRequest) {
         Usuario usuario = usuarioService.getUsuarioById(id);
 
         if (usuario == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado.");
         }
 
-        BeanUtils.copyProperties(usuarioDto, usuario);
+        BeanUtils.copyProperties(usuarioRequest, usuario);
         return ResponseEntity.status(HttpStatus.OK).body(usuarioService.inserirUsuario(usuario));
     }
 

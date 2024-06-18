@@ -1,13 +1,12 @@
-package com.mednow.mednowapi.dtos;
+package com.mednow.mednowapi.dtos.requests;
 
 import com.mednow.mednowapi.models.Paciente;
 
 import java.util.List;
 
-public record ConvenioDto(
+public record ConvenioRequest(
         String nome,
         String descricao,
         String telefone,
-        String email,
-        List<Paciente> pacientes
+        String email
 ) {}

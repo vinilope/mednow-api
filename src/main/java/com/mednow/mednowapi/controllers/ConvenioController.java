@@ -1,6 +1,6 @@
 package com.mednow.mednowapi.controllers;
 
-import com.mednow.mednowapi.dtos.ConvenioDto;
+import com.mednow.mednowapi.dtos.requests.ConvenioRequest;
 import com.mednow.mednowapi.models.Convenio;
 import com.mednow.mednowapi.services.ConvenioService;
 import jakarta.validation.Valid;
@@ -21,9 +21,9 @@ public class ConvenioController {
     private ConvenioService convenioService;
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<Object> saveConvenio(@RequestBody @Valid ConvenioDto convenioDto) {
+    public ResponseEntity<Object> saveConvenio(@RequestBody @Valid ConvenioRequest convenioRequest) {
         var convenio = new Convenio();
-        BeanUtils.copyProperties(convenioDto, convenio);
+        BeanUtils.copyProperties(convenioRequest, convenio);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(convenioService.inserirConvenio(convenio));
     }
@@ -51,14 +51,14 @@ public class ConvenioController {
     }
 
     @PutMapping("/atualizar/{id}")
-    public ResponseEntity<Object> updateConvenioById(@PathVariable UUID id, @RequestBody @Valid ConvenioDto convenioDto) {
+    public ResponseEntity<Object> updateConvenioById(@PathVariable UUID id, @RequestBody @Valid ConvenioRequest convenioRequest) {
         Convenio convenio = convenioService.getConvenioById(id);
 
         if (convenio == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Convenio não encontrada.");
         }
 
-        BeanUtils.copyProperties(convenioDto, convenio);
+        BeanUtils.copyProperties(convenioRequest, convenio);
         return ResponseEntity.status(HttpStatus.OK).body(convenioService.inserirConvenio(convenio));
     }
 

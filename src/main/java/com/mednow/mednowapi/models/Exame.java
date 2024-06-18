@@ -21,6 +21,7 @@ public class Exame implements Serializable {
 
     private LocalDate data;
     private String observacao;
+    private Integer tipoExame;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_consulta")
@@ -29,8 +30,4 @@ public class Exame implements Serializable {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_laboratorio")
     private Laboratorio laboratorio;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "fk_tipo_exame")
-    private TipoExame tipoExame;
 }

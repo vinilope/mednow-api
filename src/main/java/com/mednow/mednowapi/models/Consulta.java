@@ -23,7 +23,7 @@ public class Consulta implements Serializable {
 
     private LocalDateTime dataHora;
     private String descricao;
-    private Boolean pedido_exame;
+    private Boolean pedidoExame;
     private Boolean encaminhado;
 
     @ManyToOne(cascade = CascadeType.ALL)
