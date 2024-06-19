@@ -1,6 +1,7 @@
 package com.mednow.mednowapi.controllers;
 
 import com.mednow.mednowapi.dtos.requests.PacienteRequest;
+import com.mednow.mednowapi.dtos.responses.PacienteResponse;
 import com.mednow.mednowapi.models.Paciente;
 import com.mednow.mednowapi.services.PacienteService;
 import jakarta.validation.Valid;
@@ -37,34 +38,19 @@ public class PacienteController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> getPacienteById(@PathVariable UUID id) {
-        Paciente paciente = pacienteService.getPacienteById(id);
+    public ResponseEntity<PacienteResponse> getPacienteById(@PathVariable UUID id) {
 
-        if (paciente == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Paciente não encontrado.");
-        }
-
-        return ResponseEntity.status(HttpStatus.OK).body(paciente);
+        return ResponseEntity.status(HttpStatus.OK).body(new PacienteResponse(pacienteService.getPacienteById(id)));
     }
 
     @PutMapping("/atualizar/{id}")
-    public ResponseEntity<Object> updatePacienteById(@PathVariable UUID id, @RequestBody @Valid PacienteRequest pacienteRequest) {
-        Paciente paciente = pacienteService.getPacienteById(id);
+    public ResponseEntity<Object> updatePaciente(@PathVariable UUID id, @RequestBody @Valid PacienteRequest pacienteRequest) {
 
-        if (paciente == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Paciente não encontrado.");
-        }
-
-        return ResponseEntity.status(HttpStatus.OK).body(pacienteService.inserirPaciente(pacienteRequest));
+        return ResponseEntity.status(HttpStatus.OK).body(pacienteService.atualizarPaciente(id, pacienteRequest));
     }
 
     @DeleteMapping("/deletar/{id}")
-    public ResponseEntity<Object> deletePacienteById(@PathVariable UUID id) {
-        Paciente paciente = pacienteService.getPacienteById(id);
-
-        if (paciente == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Paciente não encontrado.");
-        }
+    public ResponseEntity<Object> deletePaciente(@PathVariable UUID id) {
 
         pacienteService.deletePacienteById(id);
         return ResponseEntity.status(HttpStatus.OK).body("Paciente deletado com sucesso.");

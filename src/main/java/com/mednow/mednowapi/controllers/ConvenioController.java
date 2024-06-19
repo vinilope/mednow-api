@@ -1,6 +1,7 @@
 package com.mednow.mednowapi.controllers;
 
 import com.mednow.mednowapi.dtos.requests.ConvenioRequest;
+import com.mednow.mednowapi.dtos.responses.ConvenioResponse;
 import com.mednow.mednowapi.models.Convenio;
 import com.mednow.mednowapi.services.ConvenioService;
 import jakarta.validation.Valid;
@@ -37,34 +38,19 @@ public class ConvenioController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> getConvenioById(@PathVariable UUID id) {
-        Convenio convenio = convenioService.getConvenioById(id);
+    public ResponseEntity<ConvenioResponse> getConvenioById(@PathVariable UUID id) {
 
-        if (convenio == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Convenio não encontrado.");
-        }
-
-        return ResponseEntity.status(HttpStatus.OK).body(convenio);
+        return ResponseEntity.status(HttpStatus.OK).body(new ConvenioResponse(convenioService.getConvenioById(id)));
     }
 
     @PutMapping("/atualizar/{id}")
-    public ResponseEntity<Object> updateConvenioById(@PathVariable UUID id, @RequestBody @Valid ConvenioRequest convenioRequest) {
-        Convenio convenio = convenioService.getConvenioById(id);
+    public ResponseEntity<Object> updateConvenio(@PathVariable UUID id, @RequestBody @Valid ConvenioRequest convenioRequest) {
 
-        if (convenio == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Convenio não encontrada.");
-        }
-
-        return ResponseEntity.status(HttpStatus.OK).body(convenioService.inserirConvenio(convenioRequest));
+        return ResponseEntity.status(HttpStatus.OK).body(convenioService.atualizarConvenio(id, convenioRequest));
     }
 
     @DeleteMapping("/deletar/{id}")
-    public ResponseEntity<Object> deleteConvenioById(@PathVariable UUID id) {
-        Convenio convenio = convenioService.getConvenioById(id);
-
-        if (convenio == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Convenio não encontrado.");
-        }
+    public ResponseEntity<Object> deleteConvenio(@PathVariable UUID id) {
 
         convenioService.deleteConvenioById(id);
         return ResponseEntity.status(HttpStatus.OK).body("Convenio deletado com sucesso.");

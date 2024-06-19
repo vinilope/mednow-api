@@ -1,6 +1,7 @@
 package com.mednow.mednowapi.controllers;
 
 import com.mednow.mednowapi.dtos.requests.ExameRequest;
+import com.mednow.mednowapi.dtos.responses.ExameResponse;
 import com.mednow.mednowapi.models.Exame;
 import com.mednow.mednowapi.services.ExameService;
 import jakarta.validation.Valid;
@@ -37,34 +38,19 @@ public class ExameController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> getExameById(@PathVariable UUID id) {
-        Exame exame = exameService.getExameById(id);
+    public ResponseEntity<ExameResponse> getExameById(@PathVariable UUID id) {
 
-        if (exame == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Exame não encontrado.");
-        }
-
-        return ResponseEntity.status(HttpStatus.OK).body(exame);
+        return ResponseEntity.status(HttpStatus.OK).body(new ExameResponse(exameService.getExameById(id)));
     }
 
     @PutMapping("/atualizar/{id}")
-    public ResponseEntity<Object> updateExameById(@PathVariable UUID id, @RequestBody @Valid ExameRequest exameRequest) {
-        Exame exame = exameService.getExameById(id);
+    public ResponseEntity<Object> updateExame(@PathVariable UUID id, @RequestBody @Valid ExameRequest exameRequest) {
 
-        if (exame == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Exame não encontrado.");
-        }
-
-        return ResponseEntity.status(HttpStatus.OK).body(exameService.inserirExame(exameRequest));
+        return ResponseEntity.status(HttpStatus.OK).body(exameService.atualizarExame(id, exameRequest));
     }
 
     @DeleteMapping("/deletar/{id}")
-    public ResponseEntity<Object> deleteExameById(@PathVariable UUID id) {
-        Exame exame = exameService.getExameById(id);
-
-        if (exame == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Exame não encontrado.");
-        }
+    public ResponseEntity<Object> deleteExame(@PathVariable UUID id) {
 
         exameService.deleteExameById(id);
         return ResponseEntity.status(HttpStatus.OK).body("Exame deletado com sucesso.");

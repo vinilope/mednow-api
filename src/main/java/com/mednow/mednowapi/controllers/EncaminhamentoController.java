@@ -1,6 +1,7 @@
 package com.mednow.mednowapi.controllers;
 
 import com.mednow.mednowapi.dtos.requests.EncaminhamentoRequest;
+import com.mednow.mednowapi.dtos.responses.EncaminhamentoResponse;
 import com.mednow.mednowapi.models.Encaminhamento;
 import com.mednow.mednowapi.services.EncaminhamentoService;
 import jakarta.validation.Valid;
@@ -37,34 +38,19 @@ public class EncaminhamentoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> getEncaminhamentoById(@PathVariable UUID id) {
-        Encaminhamento encaminhamento = encaminhamentoService.getEncaminhamentoById(id);
+    public ResponseEntity<EncaminhamentoResponse> getEncaminhamentoById(@PathVariable UUID id) {
 
-        if (encaminhamento == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Encaminhamento não encontrado.");
-        }
-
-        return ResponseEntity.status(HttpStatus.OK).body(encaminhamento);
+        return ResponseEntity.status(HttpStatus.OK).body(new EncaminhamentoResponse(encaminhamentoService.getEncaminhamentoById(id)));
     }
 
     @PutMapping("/atualizar/{id}")
-    public ResponseEntity<Object> updateEncaminhamentoById(@PathVariable UUID id, @RequestBody @Valid EncaminhamentoRequest encaminhamentoRequest) {
-        Encaminhamento encaminhamento = encaminhamentoService.getEncaminhamentoById(id);
+    public ResponseEntity<Object> updateEncaminhamento(@PathVariable UUID id, @RequestBody @Valid EncaminhamentoRequest encaminhamentoRequest) {
 
-        if (encaminhamento == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Encaminhamento não encontrado.");
-        }
-
-        return ResponseEntity.status(HttpStatus.OK).body(encaminhamentoService.inserirEncaminhamento(encaminhamentoRequest));
+        return ResponseEntity.status(HttpStatus.OK).body(encaminhamentoService.atualizarEncaminhamento(id, encaminhamentoRequest));
     }
 
     @DeleteMapping("/deletar/{id}")
-    public ResponseEntity<Object> deleteEncaminhamentoById(@PathVariable UUID id) {
-        Encaminhamento encaminhamento = encaminhamentoService.getEncaminhamentoById(id);
-
-        if (encaminhamento == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Encaminhamento não encontrado.");
-        }
+    public ResponseEntity<Object> deleteEncaminhamento(@PathVariable UUID id) {
 
         encaminhamentoService.deleteEncaminhamentoById(id);
         return ResponseEntity.status(HttpStatus.OK).body("Encaminhamento deletado com sucesso.");

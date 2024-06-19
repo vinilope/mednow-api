@@ -1,6 +1,7 @@
 package com.mednow.mednowapi.controllers;
 
 import com.mednow.mednowapi.dtos.requests.ConsultaRequest;
+import com.mednow.mednowapi.dtos.responses.ConsultaResponse;
 import com.mednow.mednowapi.models.Consulta;
 import com.mednow.mednowapi.services.ConsultaService;
 import jakarta.validation.Valid;
@@ -37,34 +38,19 @@ public class ConsultaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> getConsultaById(@PathVariable UUID id) {
-        Consulta consulta = consultaService.getConsultaById(id);
+    public ResponseEntity<ConsultaResponse> getConsultaById(@PathVariable UUID id) {
 
-        if (consulta == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Consulta não encontrada.");
-        }
-
-        return ResponseEntity.status(HttpStatus.OK).body(consulta);
+        return ResponseEntity.status(HttpStatus.OK).body(new ConsultaResponse(consultaService.getConsultaById(id)));
     }
 
     @PutMapping("/atualizar/{id}")
-    public ResponseEntity<Object> updateConsultaById(@PathVariable UUID id, @RequestBody @Valid ConsultaRequest consultaRequest) {
-        Consulta consulta = consultaService.getConsultaById(id);
+    public ResponseEntity<Object> updateConsulta(@PathVariable UUID id, @RequestBody @Valid ConsultaRequest consultaRequest) {
 
-        if (consulta == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Consulta não encontrada.");
-        }
-
-        return ResponseEntity.status(HttpStatus.OK).body(consultaService.inserirConsulta(consultaRequest));
+        return ResponseEntity.status(HttpStatus.OK).body(consultaService.atualizarConsulta(id, consultaRequest));
     }
 
     @DeleteMapping("/deletar/{id}")
-    public ResponseEntity<Object> deleteConsultaById(@PathVariable UUID id) {
-        Consulta consulta = consultaService.getConsultaById(id);
-
-        if (consulta == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Consulta não encontrada.");
-        }
+    public ResponseEntity<Object> deleteConsulta(@PathVariable UUID id) {
 
         consultaService.deleteConsultaById(id);
         return ResponseEntity.status(HttpStatus.OK).body("Consulta deletada com sucesso.");

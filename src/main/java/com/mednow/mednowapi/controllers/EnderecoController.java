@@ -1,6 +1,7 @@
 package com.mednow.mednowapi.controllers;
 
 import com.mednow.mednowapi.dtos.requests.EnderecoRequest;
+import com.mednow.mednowapi.dtos.responses.EnderecoResponse;
 import com.mednow.mednowapi.models.Endereco;
 import com.mednow.mednowapi.services.EnderecoService;
 import jakarta.validation.Valid;
@@ -30,41 +31,26 @@ public class EnderecoController {
         List<Endereco> enderecos = enderecoService.getAllEnderecos();
 
         if (enderecos.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Nenhum endereço encontrado.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Nenhum endereco encontrado.");
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(enderecos);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> getEnderecoById(@PathVariable UUID id) {
-        Endereco endereco = enderecoService.getEnderecoById(id);
+    public ResponseEntity<EnderecoResponse> getEnderecoById(@PathVariable UUID id) {
 
-        if (endereco == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Endereço não encontrado.");
-        }
-
-        return ResponseEntity.status(HttpStatus.OK).body(endereco);
+        return ResponseEntity.status(HttpStatus.OK).body(new EnderecoResponse(enderecoService.getEnderecoById(id)));
     }
 
     @PutMapping("/atualizar/{id}")
-    public ResponseEntity<Object> updateEnderecoById(@PathVariable UUID id, @RequestBody @Valid EnderecoRequest enderecoRequest) {
-        Endereco endereco = enderecoService.getEnderecoById(id);
+    public ResponseEntity<Object> updateEndereco(@PathVariable UUID id, @RequestBody @Valid EnderecoRequest enderecoRequest) {
 
-        if (endereco == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Endereço não encontrado.");
-        }
-
-        return ResponseEntity.status(HttpStatus.OK).body(enderecoService.inserirEndereco(enderecoRequest));
+        return ResponseEntity.status(HttpStatus.OK).body(enderecoService.atualizarEndereco(id, enderecoRequest));
     }
 
     @DeleteMapping("/deletar/{id}")
-    public ResponseEntity<Object> deleteEnderecoById(@PathVariable UUID id) {
-        Endereco endereco = enderecoService.getEnderecoById(id);
-
-        if (endereco == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Endereço não encontrado.");
-        }
+    public ResponseEntity<Object> deleteEndereco(@PathVariable UUID id) {
 
         enderecoService.deleteEnderecoById(id);
         return ResponseEntity.status(HttpStatus.OK).body("Endereço deletado com sucesso.");

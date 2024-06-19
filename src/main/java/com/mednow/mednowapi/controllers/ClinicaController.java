@@ -6,7 +6,6 @@ import com.mednow.mednowapi.models.Clinica;
 import com.mednow.mednowapi.services.ClinicaService;
 import jakarta.validation.Valid;
 import lombok.Builder;
-import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,37 +38,19 @@ public class ClinicaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> getClinicaById(@PathVariable UUID id) {
-        Clinica clinica = clinicaService.getClinicaById(id);
+    public ResponseEntity<ClinicaResponse> getClinicaById(@PathVariable UUID id) {
 
-        if (clinica == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Clínica não encontrada.");
-        }
-
-        ClinicaResponse clinicaResponse = new ClinicaResponse(clinica);
-
-        return ResponseEntity.status(HttpStatus.OK).body(clinicaResponse);
+        return ResponseEntity.status(HttpStatus.OK).body(new ClinicaResponse(clinicaService.getClinicaById(id)));
     }
 
     @PutMapping("/atualizar/{id}")
     public ResponseEntity<Object> updateClinica(@PathVariable UUID id, @RequestBody @Valid ClinicaRequest clinicaRequest) {
-        Clinica clinica = clinicaService.getClinicaById(id);
 
-        if (clinica == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Clínica não encontrada.");
-        }
-
-        BeanUtils.copyProperties(clinicaRequest, clinica);
-        return ResponseEntity.status(HttpStatus.OK).body(clinicaService.inserirClinica(clinicaRequest));
+        return ResponseEntity.status(HttpStatus.OK).body(clinicaService.atualizarClinica(id, clinicaRequest));
     }
 
     @DeleteMapping("/deletar/{id}")
     public ResponseEntity<Object> deleteClinica(@PathVariable UUID id) {
-        Clinica clinica = clinicaService.getClinicaById(id);
-
-        if (clinica == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Clínica não encontrada.");
-        }
 
         clinicaService.deleteClinicaById(id);
         return ResponseEntity.status(HttpStatus.OK).body("Clínica deletada com sucesso.");

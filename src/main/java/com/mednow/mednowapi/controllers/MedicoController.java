@@ -1,8 +1,8 @@
 package com.mednow.mednowapi.controllers;
 
 import com.mednow.mednowapi.dtos.requests.MedicoRequest;
+import com.mednow.mednowapi.dtos.responses.MedicoResponse;
 import com.mednow.mednowapi.models.Medico;
-import com.mednow.mednowapi.services.ClinicaService;
 import com.mednow.mednowapi.services.MedicoService;
 import jakarta.validation.Valid;
 import lombok.Builder;
@@ -19,7 +19,6 @@ import java.util.UUID;
 public class MedicoController {
 
     private MedicoService medicoService;
-    private ClinicaService clinicaService;
 
     @PostMapping("/cadastrar")
     public ResponseEntity<Object> saveMedico(@RequestBody @Valid MedicoRequest medicoRequest) {
@@ -39,34 +38,19 @@ public class MedicoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> getMedicoById(@PathVariable UUID id) {
-        Medico medico = medicoService.getMedicoById(id);
+    public ResponseEntity<MedicoResponse> getMedicoById(@PathVariable UUID id) {
 
-        if (medico == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Médico não encontrado.");
-        }
-
-        return ResponseEntity.status(HttpStatus.OK).body(medico);
+        return ResponseEntity.status(HttpStatus.OK).body(new MedicoResponse(medicoService.getMedicoById(id)));
     }
 
     @PutMapping("/atualizar/{id}")
-    public ResponseEntity<Object> updateMedicoById(@PathVariable UUID id, @RequestBody @Valid MedicoRequest medicoRequest) {
-        Medico medico = medicoService.getMedicoById(id);
+    public ResponseEntity<Object> updateMedico(@PathVariable UUID id, @RequestBody @Valid MedicoRequest medicoRequest) {
 
-        if (medico == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Médico não encontrado.");
-        }
-
-        return ResponseEntity.status(HttpStatus.OK).body(medicoService.inserirMedico(medicoRequest));
+        return ResponseEntity.status(HttpStatus.OK).body(medicoService.atualizarMedico(id, medicoRequest));
     }
 
     @DeleteMapping("/deletar/{id}")
-    public ResponseEntity<Object> deleteMedicoById(@PathVariable UUID id) {
-        Medico medico = medicoService.getMedicoById(id);
-
-        if (medico == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Médico não encontrado.");
-        }
+    public ResponseEntity<Object> deleteMedico(@PathVariable UUID id) {
 
         medicoService.deleteMedicoById(id);
         return ResponseEntity.status(HttpStatus.OK).body("Médico deletado com sucesso.");

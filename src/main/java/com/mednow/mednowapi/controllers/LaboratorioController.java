@@ -1,6 +1,7 @@
 package com.mednow.mednowapi.controllers;
 
 import com.mednow.mednowapi.dtos.requests.LaboratorioRequest;
+import com.mednow.mednowapi.dtos.responses.LaboratorioResponse;
 import com.mednow.mednowapi.models.Laboratorio;
 import com.mednow.mednowapi.services.LaboratorioService;
 import jakarta.validation.Valid;
@@ -37,34 +38,19 @@ public class LaboratorioController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> getLaboratorioById(@PathVariable UUID id) {
-        Laboratorio laboratorio = laboratorioService.getLaboratorioById(id);
+    public ResponseEntity<LaboratorioResponse> getLaboratorioById(@PathVariable UUID id) {
 
-        if (laboratorio == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Laboratório não encontrado.");
-        }
-
-        return ResponseEntity.status(HttpStatus.OK).body(laboratorio);
+        return ResponseEntity.status(HttpStatus.OK).body(new LaboratorioResponse(laboratorioService.getLaboratorioById(id)));
     }
 
     @PutMapping("/atualizar/{id}")
-    public ResponseEntity<Object> updateLaboratorioById(@PathVariable UUID id, @RequestBody @Valid LaboratorioRequest laboratorioRequest) {
-        Laboratorio laboratorio = laboratorioService.getLaboratorioById(id);
+    public ResponseEntity<Object> updateLaboratorio(@PathVariable UUID id, @RequestBody @Valid LaboratorioRequest laboratorioRequest) {
 
-        if (laboratorio == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Laboratório não encontrado.");
-        }
-
-        return ResponseEntity.status(HttpStatus.OK).body(laboratorioService.inserirLaboratorio(laboratorioRequest));
+        return ResponseEntity.status(HttpStatus.OK).body(laboratorioService.atualizarLaboratorio(id, laboratorioRequest));
     }
 
     @DeleteMapping("/deletar/{id}")
-    public ResponseEntity<Object> deleteLaboratorioById(@PathVariable UUID id) {
-        Laboratorio laboratorio = laboratorioService.getLaboratorioById(id);
-
-        if (laboratorio == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Laboratório não encontrado.");
-        }
+    public ResponseEntity<Object> deleteLaboratorio(@PathVariable UUID id) {
 
         laboratorioService.deleteLaboratorioById(id);
         return ResponseEntity.status(HttpStatus.OK).body("Laboratório deletado com sucesso.");

@@ -1,6 +1,7 @@
 package com.mednow.mednowapi.controllers;
 
 import com.mednow.mednowapi.dtos.requests.UsuarioRequest;
+import com.mednow.mednowapi.dtos.responses.UsuarioResponse;
 import com.mednow.mednowapi.models.Usuario;
 import com.mednow.mednowapi.services.UsuarioService;
 import jakarta.validation.Valid;
@@ -26,45 +27,30 @@ public class UsuarioController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<Usuario>> getUsuarios() {
+    public ResponseEntity<Object> getUsuarios() {
         List<Usuario> usuarios = usuarioService.getAllUsuarios();
 
         if (usuarios.isEmpty()) {
-            throw new RuntimeException("Usuário blablabla");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Nenhum usuário encontrado.");
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(usuarios);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getUsuarioById(@PathVariable UUID id) {
-        Usuario usuario = usuarioService.getUsuarioById(id);
+    public ResponseEntity<UsuarioResponse> getUsuarioById(@PathVariable UUID id) {
 
-        if (usuario == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado.");
-        }
-
-        return ResponseEntity.status(HttpStatus.OK).body(usuario);
+        return ResponseEntity.status(HttpStatus.OK).body(new UsuarioResponse(usuarioService.getUsuarioById(id)));
     }
 
     @PutMapping("/atualizar/{id}")
-    public ResponseEntity<Object> updateUsuarioById(@PathVariable UUID id, @RequestBody @Valid UsuarioRequest usuarioRequest) {
-        Usuario usuario = usuarioService.getUsuarioById(id);
+    public ResponseEntity<Object> updateUsuario(@PathVariable UUID id, @RequestBody @Valid UsuarioRequest usuarioRequest) {
 
-        if (usuario == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado.");
-        }
-
-        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.inserirUsuario(usuarioRequest));
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.atualizarUsuario(id, usuarioRequest));
     }
 
     @DeleteMapping("/deletar/{id}")
-    public ResponseEntity<Object> deleteUsuarioById(@PathVariable UUID id) {
-        Usuario usuario = usuarioService.getUsuarioById(id);
-
-        if (usuario == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado.");
-        }
+    public ResponseEntity<Object> deleteUsuario(@PathVariable UUID id) {
 
         usuarioService.deleteUsuarioById(id);
         return ResponseEntity.status(HttpStatus.OK).body("Usuário deletado com sucesso.");
