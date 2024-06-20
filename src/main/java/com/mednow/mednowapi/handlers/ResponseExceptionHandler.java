@@ -16,10 +16,10 @@ public class ResponseExceptionHandler {
     public ResponseEntity<Object> handleClinicaNotFoundException(ReponseException reponseException) {
 
         ResponseExceptionRequest responseExceptionRequest = new ResponseExceptionRequest(
-                reponseException.getMessage(),
                 HttpStatus.NOT_FOUND,
                 HttpStatus.NOT_FOUND.value(),
-                LocalDateTime.now()
+                LocalDateTime.now(),
+                reponseException.getMessage()
         );
 
         return ResponseEntity.status(responseExceptionRequest.status()).body(responseExceptionRequest);
