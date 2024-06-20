@@ -2,7 +2,6 @@ package com.mednow.mednowapi.controllers;
 
 import com.mednow.mednowapi.dtos.requests.LaboratorioRequest;
 import com.mednow.mednowapi.dtos.responses.LaboratorioResponse;
-import com.mednow.mednowapi.models.Laboratorio;
 import com.mednow.mednowapi.services.LaboratorioService;
 import jakarta.validation.Valid;
 import lombok.Builder;
@@ -10,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -28,13 +26,8 @@ public class LaboratorioController {
 
     @GetMapping("/")
     public ResponseEntity<Object> getLaboratorios() {
-        List<Laboratorio> laboratorios = laboratorioService.getAllLaboratorios();
 
-        if (laboratorios.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Nenhum laboratório encontrado.");
-        }
-
-        return ResponseEntity.status(HttpStatus.OK).body(laboratorios);
+        return ResponseEntity.status(HttpStatus.OK).body(laboratorioService.getAllLaboratorios());
     }
 
     @GetMapping("/{id}")

@@ -2,7 +2,6 @@ package com.mednow.mednowapi.controllers;
 
 import com.mednow.mednowapi.dtos.requests.ExameRequest;
 import com.mednow.mednowapi.dtos.responses.ExameResponse;
-import com.mednow.mednowapi.models.Exame;
 import com.mednow.mednowapi.services.ExameService;
 import jakarta.validation.Valid;
 import lombok.Builder;
@@ -10,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -28,13 +26,8 @@ public class ExameController {
 
     @GetMapping("/")
     public ResponseEntity<Object> getExames() {
-        List<Exame> exames = exameService.getAllExames();
 
-        if (exames.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Nenhum exame encontrado.");
-        }
-
-        return ResponseEntity.status(HttpStatus.OK).body(exames);
+        return ResponseEntity.status(HttpStatus.OK).body(exameService.getAllExames());
     }
 
     @GetMapping("/{id}")

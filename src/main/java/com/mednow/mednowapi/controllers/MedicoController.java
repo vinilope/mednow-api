@@ -2,7 +2,6 @@ package com.mednow.mednowapi.controllers;
 
 import com.mednow.mednowapi.dtos.requests.MedicoRequest;
 import com.mednow.mednowapi.dtos.responses.MedicoResponse;
-import com.mednow.mednowapi.models.Medico;
 import com.mednow.mednowapi.services.MedicoService;
 import jakarta.validation.Valid;
 import lombok.Builder;
@@ -10,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -28,13 +26,8 @@ public class MedicoController {
 
     @GetMapping("/")
     public ResponseEntity<Object> getMedicos() {
-        List<Medico> medicos = medicoService.getAllMedicos();
 
-        if (medicos.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Nenhum médico encontrado.");
-        }
-
-        return ResponseEntity.status(HttpStatus.OK).body(medicos);
+        return ResponseEntity.status(HttpStatus.OK).body(medicoService.getAllMedicos());
     }
 
     @GetMapping("/{id}")

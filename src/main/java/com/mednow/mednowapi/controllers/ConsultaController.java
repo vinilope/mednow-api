@@ -2,7 +2,6 @@ package com.mednow.mednowapi.controllers;
 
 import com.mednow.mednowapi.dtos.requests.ConsultaRequest;
 import com.mednow.mednowapi.dtos.responses.ConsultaResponse;
-import com.mednow.mednowapi.models.Consulta;
 import com.mednow.mednowapi.services.ConsultaService;
 import jakarta.validation.Valid;
 import lombok.Builder;
@@ -10,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -28,13 +26,8 @@ public class ConsultaController {
 
     @GetMapping("/")
     public ResponseEntity<Object> getConsultas() {
-        List<Consulta> consultas = consultaService.getAllConsultas();
 
-        if (consultas.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Nenhuma consulta encontrada.");
-        }
-
-        return ResponseEntity.status(HttpStatus.OK).body(consultas);
+        return ResponseEntity.status(HttpStatus.OK).body(consultaService.getAllConsultas());
     }
 
     @GetMapping("/{id}")

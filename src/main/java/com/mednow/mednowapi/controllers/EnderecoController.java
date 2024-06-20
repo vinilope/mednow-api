@@ -2,7 +2,6 @@ package com.mednow.mednowapi.controllers;
 
 import com.mednow.mednowapi.dtos.requests.EnderecoRequest;
 import com.mednow.mednowapi.dtos.responses.EnderecoResponse;
-import com.mednow.mednowapi.models.Endereco;
 import com.mednow.mednowapi.services.EnderecoService;
 import jakarta.validation.Valid;
 import lombok.Builder;
@@ -10,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -28,13 +26,8 @@ public class EnderecoController {
 
     @GetMapping("/")
     public ResponseEntity<Object> getEnderecos() {
-        List<Endereco> enderecos = enderecoService.getAllEnderecos();
 
-        if (enderecos.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Nenhum endereco encontrado.");
-        }
-
-        return ResponseEntity.status(HttpStatus.OK).body(enderecos);
+        return ResponseEntity.status(HttpStatus.OK).body(enderecoService.getAllEnderecos());
     }
 
     @GetMapping("/{id}")

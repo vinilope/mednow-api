@@ -2,7 +2,6 @@ package com.mednow.mednowapi.controllers;
 
 import com.mednow.mednowapi.dtos.requests.EncaminhamentoRequest;
 import com.mednow.mednowapi.dtos.responses.EncaminhamentoResponse;
-import com.mednow.mednowapi.models.Encaminhamento;
 import com.mednow.mednowapi.services.EncaminhamentoService;
 import jakarta.validation.Valid;
 import lombok.Builder;
@@ -10,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -28,13 +26,8 @@ public class EncaminhamentoController {
 
     @GetMapping("/")
     public ResponseEntity<Object> getEncaminhamentos() {
-        List<Encaminhamento> encaminhamentos = encaminhamentoService.getAllEncaminhamentos();
 
-        if (encaminhamentos.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Nenhum encaminhamento encontrado.");
-        }
-
-        return ResponseEntity.status(HttpStatus.OK).body(encaminhamentos);
+        return ResponseEntity.status(HttpStatus.OK).body(encaminhamentoService.getAllEncaminhamentos());
     }
 
     @GetMapping("/{id}")

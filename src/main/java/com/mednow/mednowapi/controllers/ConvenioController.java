@@ -2,7 +2,6 @@ package com.mednow.mednowapi.controllers;
 
 import com.mednow.mednowapi.dtos.requests.ConvenioRequest;
 import com.mednow.mednowapi.dtos.responses.ConvenioResponse;
-import com.mednow.mednowapi.models.Convenio;
 import com.mednow.mednowapi.services.ConvenioService;
 import jakarta.validation.Valid;
 import lombok.Builder;
@@ -10,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -28,13 +26,8 @@ public class ConvenioController {
 
     @GetMapping("/")
     public ResponseEntity<Object> getConvenios() {
-        List<Convenio> convenios = convenioService.getAllConvenios();
 
-        if (convenios.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Nenhum convenio encontrado.");
-        }
-
-        return ResponseEntity.status(HttpStatus.OK).body(convenios);
+        return ResponseEntity.status(HttpStatus.OK).body(convenioService.getAllConvenios());
     }
 
     @GetMapping("/{id}")

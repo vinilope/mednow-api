@@ -2,7 +2,6 @@ package com.mednow.mednowapi.controllers;
 
 import com.mednow.mednowapi.dtos.requests.UsuarioRequest;
 import com.mednow.mednowapi.dtos.responses.UsuarioResponse;
-import com.mednow.mednowapi.models.Usuario;
 import com.mednow.mednowapi.services.UsuarioService;
 import jakarta.validation.Valid;
 import lombok.Builder;
@@ -10,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -28,13 +26,8 @@ public class UsuarioController {
 
     @GetMapping("/")
     public ResponseEntity<Object> getUsuarios() {
-        List<Usuario> usuarios = usuarioService.getAllUsuarios();
 
-        if (usuarios.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Nenhum usuário encontrado.");
-        }
-
-        return ResponseEntity.status(HttpStatus.OK).body(usuarios);
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.getAllUsuarios());
     }
 
     @GetMapping("/{id}")
