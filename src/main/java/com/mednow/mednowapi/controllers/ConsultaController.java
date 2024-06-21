@@ -2,6 +2,7 @@ package com.mednow.mednowapi.controllers;
 
 import com.mednow.mednowapi.dtos.requests.ConsultaRequest;
 import com.mednow.mednowapi.dtos.responses.ConsultaResponse;
+import com.mednow.mednowapi.models.Consulta;
 import com.mednow.mednowapi.services.ConsultaService;
 import jakarta.validation.Valid;
 import lombok.Builder;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -19,13 +21,13 @@ public class ConsultaController {
     private ConsultaService consultaService;
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<Object> saveConsulta(@RequestBody @Valid ConsultaRequest consultaRequest) {
+    public ResponseEntity<Consulta> saveConsulta(@RequestBody @Valid ConsultaRequest consultaRequest) {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(consultaService.inserirConsulta(consultaRequest));
     }
 
     @GetMapping("/")
-    public ResponseEntity<Object> getConsultas() {
+    public ResponseEntity<List<Consulta>> getConsultas() {
 
         return ResponseEntity.status(HttpStatus.OK).body(consultaService.getAllConsultas());
     }
@@ -37,13 +39,13 @@ public class ConsultaController {
     }
 
     @PutMapping("/atualizar/{id}")
-    public ResponseEntity<Object> updateConsulta(@PathVariable UUID id, @RequestBody @Valid ConsultaRequest consultaRequest) {
+    public ResponseEntity<Consulta> updateConsulta(@PathVariable UUID id, @RequestBody @Valid ConsultaRequest consultaRequest) {
 
         return ResponseEntity.status(HttpStatus.OK).body(consultaService.atualizarConsulta(id, consultaRequest));
     }
 
     @DeleteMapping("/deletar/{id}")
-    public ResponseEntity<Object> deleteConsulta(@PathVariable UUID id) {
+    public ResponseEntity<String> deleteConsulta(@PathVariable UUID id) {
 
         consultaService.deleteConsultaById(id);
         return ResponseEntity.status(HttpStatus.OK).body("Consulta deletada com sucesso.");

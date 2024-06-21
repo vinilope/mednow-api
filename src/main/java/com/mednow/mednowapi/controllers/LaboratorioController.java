@@ -2,6 +2,7 @@ package com.mednow.mednowapi.controllers;
 
 import com.mednow.mednowapi.dtos.requests.LaboratorioRequest;
 import com.mednow.mednowapi.dtos.responses.LaboratorioResponse;
+import com.mednow.mednowapi.models.Laboratorio;
 import com.mednow.mednowapi.services.LaboratorioService;
 import jakarta.validation.Valid;
 import lombok.Builder;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -19,13 +21,13 @@ public class LaboratorioController {
     private LaboratorioService laboratorioService;
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<Object> saveLaboratorio(@RequestBody @Valid LaboratorioRequest laboratorioRequest) {
+    public ResponseEntity<Laboratorio> saveLaboratorio(@RequestBody @Valid LaboratorioRequest laboratorioRequest) {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(laboratorioService.inserirLaboratorio(laboratorioRequest));
     }
 
     @GetMapping("/")
-    public ResponseEntity<Object> getLaboratorios() {
+    public ResponseEntity<List<Laboratorio>> getLaboratorios() {
 
         return ResponseEntity.status(HttpStatus.OK).body(laboratorioService.getAllLaboratorios());
     }
@@ -37,13 +39,13 @@ public class LaboratorioController {
     }
 
     @PutMapping("/atualizar/{id}")
-    public ResponseEntity<Object> updateLaboratorio(@PathVariable UUID id, @RequestBody @Valid LaboratorioRequest laboratorioRequest) {
+    public ResponseEntity<Laboratorio> updateLaboratorio(@PathVariable UUID id, @RequestBody @Valid LaboratorioRequest laboratorioRequest) {
 
         return ResponseEntity.status(HttpStatus.OK).body(laboratorioService.atualizarLaboratorio(id, laboratorioRequest));
     }
 
     @DeleteMapping("/deletar/{id}")
-    public ResponseEntity<Object> deleteLaboratorio(@PathVariable UUID id) {
+    public ResponseEntity<String> deleteLaboratorio(@PathVariable UUID id) {
 
         laboratorioService.deleteLaboratorioById(id);
         return ResponseEntity.status(HttpStatus.OK).body("Laboratório deletado com sucesso.");

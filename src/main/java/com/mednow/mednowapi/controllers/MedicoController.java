@@ -2,6 +2,7 @@ package com.mednow.mednowapi.controllers;
 
 import com.mednow.mednowapi.dtos.requests.MedicoRequest;
 import com.mednow.mednowapi.dtos.responses.MedicoResponse;
+import com.mednow.mednowapi.models.Medico;
 import com.mednow.mednowapi.services.MedicoService;
 import jakarta.validation.Valid;
 import lombok.Builder;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -19,13 +21,13 @@ public class MedicoController {
     private MedicoService medicoService;
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<Object> saveMedico(@RequestBody @Valid MedicoRequest medicoRequest) {
+    public ResponseEntity<Medico> saveMedico(@RequestBody @Valid MedicoRequest medicoRequest) {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(medicoService.inserirMedico(medicoRequest));
     }
 
     @GetMapping("/")
-    public ResponseEntity<Object> getMedicos() {
+    public ResponseEntity<List<Medico>> getMedicos() {
 
         return ResponseEntity.status(HttpStatus.OK).body(medicoService.getAllMedicos());
     }
@@ -37,13 +39,13 @@ public class MedicoController {
     }
 
     @PutMapping("/atualizar/{id}")
-    public ResponseEntity<Object> updateMedico(@PathVariable UUID id, @RequestBody @Valid MedicoRequest medicoRequest) {
+    public ResponseEntity<Medico> updateMedico(@PathVariable UUID id, @RequestBody @Valid MedicoRequest medicoRequest) {
 
         return ResponseEntity.status(HttpStatus.OK).body(medicoService.atualizarMedico(id, medicoRequest));
     }
 
     @DeleteMapping("/deletar/{id}")
-    public ResponseEntity<Object> deleteMedico(@PathVariable UUID id) {
+    public ResponseEntity<String> deleteMedico(@PathVariable UUID id) {
 
         medicoService.deleteMedicoById(id);
         return ResponseEntity.status(HttpStatus.OK).body("Médico deletado com sucesso.");
