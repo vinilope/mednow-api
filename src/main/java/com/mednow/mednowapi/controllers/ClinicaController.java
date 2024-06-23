@@ -2,6 +2,7 @@ package com.mednow.mednowapi.controllers;
 
 import com.mednow.mednowapi.dtos.requests.ClinicaRequest;
 import com.mednow.mednowapi.dtos.responses.ClinicaResponse;
+import com.mednow.mednowapi.dtos.responses.QuantidadeClinicaResponse;
 import com.mednow.mednowapi.models.Clinica;
 import com.mednow.mednowapi.services.ClinicaService;
 import jakarta.validation.Valid;
@@ -49,5 +50,11 @@ public class ClinicaController {
 
         clinicaService.deleteClinicaById(id);
         return ResponseEntity.status(HttpStatus.OK).body("Clínica deletada com sucesso.");
+    }
+
+    @GetMapping("/listar-quantidade")
+    public ResponseEntity<QuantidadeClinicaResponse> listarQuantidade() {
+
+        return ResponseEntity.status(HttpStatus.OK).body(clinicaService.listarQuantidade());
     }
 }

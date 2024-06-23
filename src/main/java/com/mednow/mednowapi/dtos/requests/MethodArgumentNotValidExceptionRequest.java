@@ -10,5 +10,4 @@ public record MethodArgumentNotValidExceptionRequest(
         int status,
         LocalDateTime timestamp,
         Map<String, String> fields
-) {
-}
+) {}

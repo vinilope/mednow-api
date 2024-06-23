@@ -1,6 +1,7 @@
 package com.mednow.mednowapi.services;
 
 import com.mednow.mednowapi.dtos.requests.ClinicaRequest;
+import com.mednow.mednowapi.dtos.responses.QuantidadeClinicaResponse;
 import com.mednow.mednowapi.models.Clinica;
 import com.mednow.mednowapi.repositories.ClinicaRepository;
 import exceptions.ReponseException;
@@ -65,5 +66,9 @@ public class ClinicaService {
         }
 
         return clinicaRepository.save(clinica);
+    }
+
+    public QuantidadeClinicaResponse listarQuantidade() {
+        return clinicaRepository.listarQuantidade();
     }
 }
